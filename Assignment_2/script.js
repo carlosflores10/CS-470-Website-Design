@@ -195,7 +195,7 @@ function operation(n1,n2,op){
     case "÷":
       result = division(n1,n2);
       break;
-    case "x":
+    case "×":
       result = multiplication(n1,n2);
       break;
     case "%":

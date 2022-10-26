@@ -34,7 +34,11 @@ function checkEquals(data,dis){
   }
 }
 function printOnTheScrean(data,dis){
-  if(data.textContent == "AC"){
+  if(data.textContent == "Deg"){
+    deg = true;
+  }
+  
+  else if(data.textContent == "AC"){
       if(dis.textContent[dis.textContent.length-1]==" ")
         dis.textContent = dis.textContent.substring(0,dis.textContent.length-3);
       else if(equals)
@@ -43,6 +47,7 @@ function printOnTheScrean(data,dis){
         dis.textContent = dis.textContent.substring(0,dis.textContent.length-1);
       }
   }
+
   else if(data.className == "function"){
     equals = false;
     insertOrAdd(data.textContent+'( ',data.className);
@@ -62,6 +67,7 @@ function printOnTheScrean(data,dis){
         dis.textContent += ' '+data.textContent+' ';
     }
   }
+
   else if(data >= 0 && data <= 9){
     insertOrAdd(data,'digit');
   }
@@ -71,7 +77,7 @@ function printOnTheScrean(data,dis){
   return dis;
 }
 function operationByPriority(values){
-  let op = ['!','%','÷','×','-','+'];
+  let op = ['!','%','÷','×','-','+','EXP','xy'];
   let functions = ['sin(','cos(','tan(','log(','ln(','√('];
   let i = 0;
   let f = 0;
@@ -136,13 +142,13 @@ function fOpearation(fName, n){
   let result;
   switch(fName){
     case 'cos(':
-      result = (rad)?Math.cos(n):Math.cos(n*Math.PI/180);
+      result = Math.cos(n*Math.PI/180);
       break;
     case 'sin(':
-      result = (rad)?Math.sin(n):Math.sin(n*Math.PI/180);
+      result = Math.sin(n*Math.PI/180);
       break;
     case 'tan(':
-      result = (rad)?Math.tan(n):tan(n*Math.PI/180);
+      result = Math.tan(n*Math.PI/180);
       break;
     case 'log(':
       result = Math.log10(n);
@@ -152,7 +158,6 @@ function fOpearation(fName, n){
       break;
     case '√(':
       result = Math.sqrt(n);
-
   }
   return result;
 }
@@ -173,14 +178,18 @@ function addition(n1,n2){
   function percentage(n1,n2){
     return n1*(n2/100);
   }
-  
+  function raise(n1,n2){
+    return Math.pow(n1,n2);
+  }
+  function EXP(n1,n2){
+    return n1*Math.pow(10,n2);
+  }
   function factorial(num){
     if(num == 0)
       return 1;
     else if(num > 0)
       return num * factorial(num-1);
   }
-
 
 // general operations
 function operation(n1,n2,op){
@@ -200,6 +209,10 @@ function operation(n1,n2,op){
       break;
     case "%":
       result = percentage(n1,n2);
+    case "xy":
+      result = raise(n1,n2);
+    case "EXP":
+      result = EXP(n1,n2);
   }
   return result;
 
